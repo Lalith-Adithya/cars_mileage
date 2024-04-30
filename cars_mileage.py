@@ -390,7 +390,7 @@ df, df1 = user_input_features()
 st.write(center_dataframe(df1), unsafe_allow_html=True)
 
 
-data = pd.read_csv(r'https://github.com/Lalith-Adithya/cars_mileage/blob/main/df_10.csv')
+data = pd.read_csv(r'https://raw.githubusercontent.com/Lalith-Adithya/cars_mileage/main/df_10.csv')
 X = data[['Engine Fuel Type', 'Engine HP', 'Engine Cylinders',
            'Transmission Type', 'Driven_Wheels', 'Market Category',
            'Vehicle Size', 'Vehicle Style']]
