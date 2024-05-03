@@ -44,7 +44,7 @@ st.markdown("""
 #sidebar background
 st.sidebar.markdown("""
     <style>
-    .st-emotion-cache-16txtl3.eczjsme4 {
+    [data-testid="stSidebar"] {
       background-image: url("https://static.vecteezy.com/system/resources/previews/009/443/753/non_2x/city-night-highway-illustration-with-a-car-and-starry-sky-vector.jpg");
       background-size: cover;
       background-position: 2px 2px;
@@ -55,25 +55,19 @@ st.sidebar.markdown("""
 #title
 styled_text = """
 <div style="background-color:transparent; padding:0px; border-radius:0px; margin:0px;">
-<h1 style="color:#9EA49D ; font-family: Arial; font-weight: bold; font-size:75px; margin: 0px; text-shadow: 3px 5px 5px #f5f5f5; text-align:center;">Mileage <span style="color:aqua;">Predictor</span> ⛽️</h1>
-<p style="color:#D3FC07 ; font-weight: bold; font-size:22px; text-align:center; margin:0px; text-shadow: 1.5px 1.5px 5px #E6F987 ;">This app predicts the mileage of any car based on 'Engine Fuel Type', 'Engine HP', 'Engine Cylinders',
+<h1 style="color:#9EA49D ; font-family: Arial; font-weight: bold; font-size:75px; margin: 0px; text-shadow: 3px 5px 5px #FF4B4B; text-align:center;">Mileage <span style="color:white;">Predictor</span> ⛽️</h1>
+<p style="color:white ; font-weight: bold; font-size:22px; text-align:center; margin:0px; text-shadow: 1.5px 1.5px 5px #FF4B4B; ;">This app predicts the mileage of any car based on 'Engine Fuel Type', 'Engine HP', 'Engine Cylinders',
   'Transmission Type', 'Driven_Wheels', 'Market Category', 'Vehicle Size', 'Vehicle Style'!</p>
 </div>
 """
 st.markdown(styled_text, unsafe_allow_html=True)
 
-#check_specifications
-styled_check_text="""
-<div>
-<h2 style="text-align:center; color:#00EE12 ; margin-top:30px; text-shadow: 1.5px 1.5px 5px #87F08F; font-weight: bold; font-size:37px; "> Check Your Car's Specifications Below 👇</h2>
-</div>
-"""
-st.markdown(styled_check_text, unsafe_allow_html=True)
 
 #sidebar heading
 st.sidebar.markdown("""
     <style>
       .stHeadingContainer h2 {
+        font-family: Arial;
         color:white;
         text-shadow: 1.5px 1.5px 5px #FF4B4B;
         font-weight:bold;
@@ -94,6 +88,7 @@ def user_input_features():
     <style>
       .row-widget.stSelectbox p {
         color:white;
+        font-family: Arial;
         font-weight:bold;
         font-size:19px;
     }
@@ -105,6 +100,7 @@ def user_input_features():
     <style>
       .stNumberInput p {
         color:white;
+        font-family: Arial;
         font-weight:bold;
         font-size:19px;
     }
@@ -116,6 +112,7 @@ def user_input_features():
     <style>
       .stSlider p {
         color:white;
+        font-family: Arial;
         font-weight:bold;
         font-size:19px;
     }
@@ -127,6 +124,7 @@ def user_input_features():
     <style>
       .st-emotion-cache-l9bjmx.e1nzilvr5 p {
         color:white;
+        font-family: Arial;
         font-weight:bold;
         font-size:19px;
     }
@@ -138,6 +136,7 @@ def user_input_features():
     <style>
       .st-br {
         color:#FF4B4B;
+        font-family: Arial;
         font-weight:bold;
         font-size:17px;
     }
@@ -149,6 +148,7 @@ def user_input_features():
     <style>
       .st-d3 {
         color:#FF4B4B;
+        font-family: Arial;
         font-weight:bold;
         font-size:17px;
     }
@@ -171,6 +171,7 @@ def user_input_features():
     <style>
       .stMultiSelect p {
         color:white;
+        font-family: Arial;
         font-weight:bold;
         font-size:19px;
     }
@@ -182,6 +183,7 @@ def user_input_features():
     <style>
       .st-f7 {
         color:#FF4B4B;
+        font-family: Arial;
         font-weight:bold;
         font-size:17px;
     }
@@ -193,6 +195,7 @@ def user_input_features():
     <style>
       .stRadio p {
         color:#FF4B4B;
+        font-family: Arial;
         font-weight:bold;
         font-size:17px;
     }
@@ -290,7 +293,8 @@ def user_input_features():
     
     Vehicle_Size = st.sidebar.radio('Vehicle Size 🚙', options=list(size_dic.keys()))
 
-    style_dic={'2dr hatchback': 0.,
+    style_dic={
+               '2dr hatchback': 0.,
                '4dr hatchback': 0.13333333,
                'sedan': 0.93333333,
                '2dr suv': 0.06666667,
@@ -341,10 +345,11 @@ def user_input_features():
 st.markdown("""
     <style>
       .dataframe th {
-        color:#00FE7F ;
-        text-shadow: 1.5px 1.5px 2px #A9F9D1  ;
+        color:white ;
+        font-family: Arial;
+        text-shadow: 1.5px 1.5px 2px #FF4B4B;  ;
         font-weight:bold;
-        font-size:18.5px;
+        font-size:17px;
         border: 1px solid #EBDFF1 ;
     }
     </style>
@@ -354,8 +359,9 @@ st.markdown("""
 st.markdown("""
     <style>
       .dataframe td {
-        color:#00F9DF ;
-        text-shadow: 1.5px 1.5px 2px #ABE2DC   ;
+        color:#FF4B4B;
+        font-family: Arial;
+        text-shadow: 1.5px 1.5px 2px #FF4B4B   ;
         font-weight:bold;
         font-size:17px;
         border: 1px solid #EBDFF1 ;
@@ -386,78 +392,137 @@ def center_dataframe(df2):
 # User input features
 df, df1 = user_input_features()
 
-# Display centered dataframe
-st.write(center_dataframe(df1), unsafe_allow_html=True)
-
-
-data = pd.read_csv(r'https://raw.githubusercontent.com/Lalith-Adithya/cars_mileage/main/df_10.csv')
-X = data[['Engine Fuel Type', 'Engine HP', 'Engine Cylinders',
-           'Transmission Type', 'Driven_Wheels', 'Market Category',
-           'Vehicle Size', 'Vehicle Style']]
-Y = data['Average MPG']
-
-#support vector
-clf = SVR()
-clf.fit(X, Y)
-prediction_SVR = clf.predict(df)
-
-#Linear regression
-Lreg = LinearRegression()
-Lreg.fit(X, Y)
-prediction_LR = Lreg.predict(df)
-
-#Random Forest
-Rreg = RandomForestRegressor()
-Rreg.fit(X, Y)
-prediction_RF = Rreg.predict(df)
-
-#KNN
-Kreg = KNeighborsRegressor()
-Kreg.fit(X, Y)
-prediction_KNN = Kreg.predict(df)
-
-#decision trees
-Dreg = DecisionTreeRegressor()
-Dreg.fit(X, Y)
-prediction_D = Dreg.predict(df)
-
-#total prdiction
-prediction_array = ( prediction_SVR + prediction_LR + prediction_RF + prediction_KNN + prediction_D ) / 5
-prediction = prediction_array.reshape(-1)[0]
-prediction = round(prediction, 2)
-#final result
-styled_result_text="""
-<div>
-<h2 style="text-align:center; color:#00A6F9 ; margin-top:30px; text-shadow: 1.5px 1.5px 4px #94D7F8 ; font-size:40px;"> Your, car mileage is:</h2>
-</div>
-"""
-st.markdown(styled_result_text, unsafe_allow_html=True)
+st.markdown("""
+        <style>
+        .row-widget.stButton p {
+            box-shadow: 3.5px 3.5px 4px #94D7F8
+            background-color:red;
+            text-align:center;
+            position: relative;
+            color:#FF4B4B ;
+            font-family: Arial;
+            font-weight:bold;
+            font-size:18px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
 st.markdown("""
-    <style>
-      .stMarkdown code {
-        background-color:transparent;
-        box-shadow: 1.5px 1.5px 4px #94D7F8
-        padding-top:9px;
-        color:#FF6C00 ;
-        font-weight:bold;
-        font-size:28px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-st.markdown("""
-    <style>
-      .stMarkdown p {
-        box-shadow: 3.5px 3.5px 4px #94D7F8
-        background-color:transparent;
-        text-align:center;
-        color:#FF6C00 ;
-        font-weight:bold;
-        font-size:28px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-st.write(prediction,"Miles per Gallon!!!")
+        <style>
+        .row-widget.stButton {
+            margin-top: 10px;
+            box-shadow: 3.5px 3.5px 4px #94D7F8
+            background-color:red;
+            text-align:center;
+            position: relative;
+            color:#FF4B4B ;
+            font-family: Arial;
+            font-weight:bold;
+            font-size:18px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
+if st.sidebar.button('Predict Mileage'):
+
+    #check_specifications
+    styled_check_text="""
+    <div>
+    <h2 style="text-align:center; color:white ; font-family: Arial; margin-top:30px; text-shadow: 1.5px 1.5px 5px #FF4B4B; font-weight: bold; font-size:37px; "> Check Your Car's Specifications Below 👇</h2>
+    </div>
+    """
+    st.markdown(styled_check_text, unsafe_allow_html=True)
+
+    
+
+    # Display centered dataframe
+    st.write(center_dataframe(df1), unsafe_allow_html=True)
+
+
+
+    # Read the CSV file from the raw GitHub URL
+    data = pd.read_csv(r'https://raw.githubusercontent.com/Lalith-Adithya/cars_mileage/main/df_10.csv')
+
+    # Now you can use the 'data' DataFrame for further analysis or processing
+
+
+    X = data[['Engine Fuel Type', 'Engine HP', 'Engine Cylinders',
+            'Transmission Type', 'Driven_Wheels', 'Market Category',
+            'Vehicle Size', 'Vehicle Style']]
+    Y = data['Average MPG']
+
+    #support vector
+    clf = SVR()
+    clf.fit(X, Y)
+    prediction_SVR = clf.predict(df)
+
+    #Linear regression
+    Lreg = LinearRegression()
+    Lreg.fit(X, Y)
+    prediction_LR = Lreg.predict(df)
+
+    #Random Forest
+    Rreg = RandomForestRegressor()
+    Rreg.fit(X, Y)
+    prediction_RF = Rreg.predict(df)
+
+    #KNN
+    Kreg = KNeighborsRegressor()
+    Kreg.fit(X, Y)
+    prediction_KNN = Kreg.predict(df)
+
+    #decision trees
+    Dreg = DecisionTreeRegressor()
+    Dreg.fit(X, Y)
+    prediction_D = Dreg.predict(df)
+
+    #total prdiction
+    prediction_array = ( prediction_SVR + prediction_LR + prediction_RF + prediction_KNN + prediction_D ) / 5
+    prediction = prediction_array.reshape(-1)[0]
+    prediction = round(prediction, 2)
+    #final result
+    styled_result_text="""
+    <div>
+    <h2 style="text-align:center; color:white ; font-family: Arial; margin-top:30px; text-shadow: 1.5px 1.5px 4px #FF4B4B ; font-size:40px;"> Your, car mileage is:</h2>
+    </div>
+    """
+    st.markdown(styled_result_text, unsafe_allow_html=True)
+
+    st.markdown("""
+        <style>
+        .stMarkdown code {
+            background-color:transparent;
+            font-family: Arial;
+            box-shadow: 1.5px 1.5px 4px #94D7F8
+            padding-top:9px;
+            color:#FF4B4B;
+            font-weight:bold;
+            font-size:28px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+    st.markdown("""
+        <style>
+        .stMarkdown p {
+            box-shadow: 3.5px 3.5px 4px #94D7F8
+            background-color:transparent;
+            text-align:center;
+            color:#FF4B4B ;
+            font-family: Arial;
+            font-weight:bold;
+            font-size:28px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+    st.write(prediction,"Miles per Gallon!!!")
+else:
+   #check_specifications
+    styled_check_text="""
+    <div>
+    <h2 style="text-align:center; color:white ; font-family: Arial; margin-top:30px; text-shadow: 1.5px 1.5px 5px #FF4B4B; font-weight: bold; font-size:37px; "> 👈 PLEASE ENTER YOUR CAR'S SPECIFICATION </h2>
+    </div>
+    """
+    st.markdown(styled_check_text, unsafe_allow_html=True)
 
 
 
