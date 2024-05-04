@@ -1,36 +1,31 @@
 import streamlit as st
 import pandas as pd
-from sklearn.svm import SVR
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.tree import DecisionTreeRegressor
+import pickle
+import requests
+import numpy as np
 
+#app configuration
 st.set_page_config(layout="wide",page_title="GAS MILEAGE",initial_sidebar_state="expanded",page_icon="🚗",)
 
-def set_bg_animation(animation_url):
-  page_bg_img = f'''
-  <style>
-      .stApp {{
-          background-image: url("{animation_url}");
-          background-size: cover;
-          background-position: center center;
-          margin: 0;
-          padding: 0;
-          height: 100vh;
-          animation: animate 10s linear infinite;
-      }}
-      @keyframes animate {{
-          from {{ background-position: 0% 0%; }}
-          to {{ background-position: 100% 0%; }}
-      }}
-  </style>
-  '''
-  st.markdown(page_bg_img, unsafe_allow_html=True)
+#background Image of the app_function
+def set_bg_image(image_url):
+    page_bg_img = f'''
+    <style>
+        .stApp {{
+            background-image: url("{image_url}");
+            background-size: cover;
+            background-position: center center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }}
+    </style>
+    '''
+    st.markdown(page_bg_img, unsafe_allow_html=True)
 
-# Backgroung Gif
-animation_url = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOG9paG16aXRyNW12czlodmJkeHRkY241a2F0NzN6ZHFvd2RhcjhodCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/feOLsVVsYft04/giphy.gif"
-set_bg_animation(animation_url)
+# Background Image
+image_url = "https://c4.wallpaperflare.com/wallpaper/778/537/81/bmw-wallpaper-preview.jpg"
+set_bg_image(image_url)
 
 #whole page
 st.markdown("""
@@ -45,7 +40,7 @@ st.markdown("""
 st.sidebar.markdown("""
     <style>
     [data-testid="stSidebar"] {
-      background-image: url("https://static.vecteezy.com/system/resources/previews/009/443/753/non_2x/city-night-highway-illustration-with-a-car-and-starry-sky-vector.jpg");
+      background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUiXlReBcF1BsMwC8q2xi9DtvKP6I_HXOgmBo-KcafV8WPoPUlkUpBnnCLcwhVgbe2ewc&usqp=CAU");
       background-size: cover;
       background-position: 2px 2px;
     }
@@ -55,8 +50,8 @@ st.sidebar.markdown("""
 #title
 styled_text = """
 <div style="background-color:transparent; padding:0px; border-radius:0px; margin:0px;">
-<h1 style="color:#9EA49D ; font-family: Arial; font-weight: bold; font-size:75px; margin: 0px; text-shadow: 3px 5px 5px #FF4B4B; text-align:center;">Mileage <span style="color:white;">Predictor</span> ⛽️</h1>
-<p style="color:white ; font-weight: bold; font-size:22px; text-align:center; margin:0px; text-shadow: 1.5px 1.5px 5px #FF4B4B; ;">This app predicts the mileage of any car based on 'Engine Fuel Type', 'Engine HP', 'Engine Cylinders',
+<h1 style="color:white ; font-family: Lato; font-weight: bold; font-size:75px; margin: 0px; text-align:center;">Mileage <span style="color:white;">Predictor</span> ⛽️</h1>
+<p style="color:white ; font-family: Lato; font-weight: bold; font-size:22px; text-align:center; margin:0px ;">This app predicts the mileage of any car based on 'Engine Fuel Type', 'Engine HP', 'Engine Cylinders',
   'Transmission Type', 'Driven_Wheels', 'Market Category', 'Vehicle Size', 'Vehicle Style'!</p>
 </div>
 """
@@ -67,9 +62,8 @@ st.markdown(styled_text, unsafe_allow_html=True)
 st.sidebar.markdown("""
     <style>
       .stHeadingContainer h2 {
-        font-family: Arial;
+        font-family: Lato;
         color:white;
-        text-shadow: 1.5px 1.5px 5px #FF4B4B;
         font-weight:bold;
         font-size:28px;
         text-align:center;
@@ -88,7 +82,7 @@ def user_input_features():
     <style>
       .row-widget.stSelectbox p {
         color:white;
-        font-family: Arial;
+        font-family: Lato;
         font-weight:bold;
         font-size:19px;
     }
@@ -100,7 +94,7 @@ def user_input_features():
     <style>
       .stNumberInput p {
         color:white;
-        font-family: Arial;
+        font-family: Lato;
         font-weight:bold;
         font-size:19px;
     }
@@ -112,7 +106,7 @@ def user_input_features():
     <style>
       .stSlider p {
         color:white;
-        font-family: Arial;
+        font-family: Lato;
         font-weight:bold;
         font-size:19px;
     }
@@ -124,7 +118,7 @@ def user_input_features():
     <style>
       .st-emotion-cache-l9bjmx.e1nzilvr5 p {
         color:white;
-        font-family: Arial;
+        font-family: Lato;
         font-weight:bold;
         font-size:19px;
     }
@@ -136,7 +130,7 @@ def user_input_features():
     <style>
       .st-br {
         color:#FF4B4B;
-        font-family: Arial;
+        font-family: Lato;
         font-weight:bold;
         font-size:17px;
     }
@@ -148,7 +142,7 @@ def user_input_features():
     <style>
       .st-d3 {
         color:#FF4B4B;
-        font-family: Arial;
+        font-family: Lato;
         font-weight:bold;
         font-size:17px;
     }
@@ -171,7 +165,7 @@ def user_input_features():
     <style>
       .stMultiSelect p {
         color:white;
-        font-family: Arial;
+        font-family: Lato;
         font-weight:bold;
         font-size:19px;
     }
@@ -183,7 +177,7 @@ def user_input_features():
     <style>
       .st-f7 {
         color:#FF4B4B;
-        font-family: Arial;
+        font-family: Lato;
         font-weight:bold;
         font-size:17px;
     }
@@ -195,7 +189,7 @@ def user_input_features():
     <style>
       .stRadio p {
         color:#FF4B4B;
-        font-family: Arial;
+        font-family: Lato;
         font-weight:bold;
         font-size:17px;
     }
@@ -346,8 +340,7 @@ st.markdown("""
     <style>
       .dataframe th {
         color:white ;
-        font-family: Arial;
-        text-shadow: 1.5px 1.5px 2px #FF4B4B;  ;
+        font-family: Lato;
         font-weight:bold;
         font-size:17px;
         border: 1px solid #EBDFF1 ;
@@ -360,8 +353,7 @@ st.markdown("""
     <style>
       .dataframe td {
         color:#FF4B4B;
-        font-family: Arial;
-        text-shadow: 1.5px 1.5px 2px #FF4B4B   ;
+        font-family: Lato;
         font-weight:bold;
         font-size:17px;
         border: 1px solid #EBDFF1 ;
@@ -389,34 +381,34 @@ def center_dataframe(df2):
   </div>
   """
 
+
+
+
 # User input features
 df, df1 = user_input_features()
 
+#Styling for buttons
 st.markdown("""
         <style>
         .row-widget.stButton p {
-            box-shadow: 3.5px 3.5px 4px #94D7F8
-            background-color:red;
             text-align:center;
             position: relative;
             color:#FF4B4B ;
-            font-family: Arial;
+            font-family: Lato;
             font-weight:bold;
             font-size:18px;
         }
         </style>
         """, unsafe_allow_html=True)
-
+#Styling for buttons
 st.markdown("""
         <style>
         .row-widget.stButton {
             margin-top: 10px;
-            box-shadow: 3.5px 3.5px 4px #94D7F8
-            background-color:red;
             text-align:center;
             position: relative;
             color:#FF4B4B ;
-            font-family: Arial;
+            font-family: Lato;
             font-weight:bold;
             font-size:18px;
         }
@@ -425,65 +417,35 @@ st.markdown("""
 
 if st.sidebar.button('Predict Mileage'):
 
+    # Download the pickle file
+    url = 'https://github.com/Lalith-Adithya/cars_mileage/raw/main/model.pkl'
+    response = requests.get(url)
+    with open('model.pkl', 'wb') as f:
+        f.write(response.content)
+        
+    # Load the model
+    model = pickle.load(open('model.pkl', 'rb'))
+
     #check_specifications
     styled_check_text="""
     <div>
-    <h2 style="text-align:center; color:white ; font-family: Arial; margin-top:30px; text-shadow: 1.5px 1.5px 5px #FF4B4B; font-weight: bold; font-size:37px; "> Check Your Car's Specifications Below 👇</h2>
+    <h2 style="text-align:center; color:white ; font-family: Lato; margin-top:30px; font-weight: bold; font-size:37px; "> Check Your Car's Specifications Below 👇</h2>
     </div>
     """
     st.markdown(styled_check_text, unsafe_allow_html=True)
 
-    
-
     # Display centered dataframe
     st.write(center_dataframe(df1), unsafe_allow_html=True)
 
+    a = np.array(df).reshape(1, -1)
+    makeprediction = model.predict(a)
 
-
-    # Read the CSV file from the raw GitHub URL
-    data = pd.read_csv(r'https://raw.githubusercontent.com/Lalith-Adithya/cars_mileage/main/df_10.csv')
-
-    # Now you can use the 'data' DataFrame for further analysis or processing
-
-
-    X = data[['Engine Fuel Type', 'Engine HP', 'Engine Cylinders',
-            'Transmission Type', 'Driven_Wheels', 'Market Category',
-            'Vehicle Size', 'Vehicle Style']]
-    Y = data['Average MPG']
-
-    #support vector
-    clf = SVR()
-    clf.fit(X, Y)
-    prediction_SVR = clf.predict(df)
-
-    #Linear regression
-    Lreg = LinearRegression()
-    Lreg.fit(X, Y)
-    prediction_LR = Lreg.predict(df)
-
-    #Random Forest
-    Rreg = RandomForestRegressor()
-    Rreg.fit(X, Y)
-    prediction_RF = Rreg.predict(df)
-
-    #KNN
-    Kreg = KNeighborsRegressor()
-    Kreg.fit(X, Y)
-    prediction_KNN = Kreg.predict(df)
-
-    #decision trees
-    Dreg = DecisionTreeRegressor()
-    Dreg.fit(X, Y)
-    prediction_D = Dreg.predict(df)
-
-    #total prdiction
-    prediction_array = ( prediction_SVR + prediction_LR + prediction_RF + prediction_KNN + prediction_D ) / 5
-    prediction = prediction_array.reshape(-1)[0]
+    prediction=(makeprediction[0]* 43.5)+9.5
     prediction = round(prediction, 2)
     #final result
     styled_result_text="""
     <div>
-    <h2 style="text-align:center; color:white ; font-family: Arial; margin-top:30px; text-shadow: 1.5px 1.5px 4px #FF4B4B ; font-size:40px;"> Your, car mileage is:</h2>
+    <h2 style="text-align:center; color:white ; font-family: Lato; margin-top:30px; font-size:40px;"> Your, car mileage is:</h2>
     </div>
     """
     st.markdown(styled_result_text, unsafe_allow_html=True)
@@ -492,8 +454,7 @@ if st.sidebar.button('Predict Mileage'):
         <style>
         .stMarkdown code {
             background-color:transparent;
-            font-family: Arial;
-            box-shadow: 1.5px 1.5px 4px #94D7F8
+            font-family: Lato;
             padding-top:9px;
             color:#FF4B4B;
             font-weight:bold;
@@ -504,11 +465,10 @@ if st.sidebar.button('Predict Mileage'):
     st.markdown("""
         <style>
         .stMarkdown p {
-            box-shadow: 3.5px 3.5px 4px #94D7F8
             background-color:transparent;
             text-align:center;
             color:#FF4B4B ;
-            font-family: Arial;
+            font-family: Lato;
             font-weight:bold;
             font-size:28px;
         }
@@ -519,7 +479,7 @@ else:
    #check_specifications
     styled_check_text="""
     <div>
-    <h2 style="text-align:center; color:white ; font-family: Arial; margin-top:30px; text-shadow: 1.5px 1.5px 5px #FF4B4B; font-weight: bold; font-size:37px; "> 👈 PLEASE ENTER YOUR CAR'S SPECIFICATION </h2>
+    <h2 style="text-align:center; color:white ; font-family: Lato; margin-top:30px;  font-weight: bold; font-size:37px; "> 👈 PLEASE ENTER YOUR CAR'S SPECIFICATION </h2>
     </div>
     """
     st.markdown(styled_check_text, unsafe_allow_html=True)
