@@ -445,7 +445,7 @@ if st.sidebar.button('Predict Mileage'):
     #final result
     styled_result_text="""
     <div>
-    <h2 style="text-align:center; color:white ; font-family: Lato; margin-top:30px; font-size:40px;"> Your, car mileage is:</h2>
+    <h2 style="text-align:center; color:white ; font-family: Lato; margin-top:30px; font-size:40px;"> Your car mileage is:</h2>
     </div>
     """
     st.markdown(styled_result_text, unsafe_allow_html=True)
